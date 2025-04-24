@@ -15,15 +15,14 @@ void deallocateBoard(int** &BOARD, const int& rows) {
      * - Deallocate the array of row pointers using delete[].
      * - Set BOARD to nullptr to avoid dangling pointers.
      */
-    if(BOARD != nullptr) {
-        for(int i = 0;i<rows;i++) {
-            delete[] BOARD[i];
-            //No need to assign nullptr for BOARD[i],
-            //NO extra if condition, code optimized
-        }
-        delete[] BOARD;
-        BOARD = nullptr;
+    if(BOARD == nullptr) return;
+    for(int i = 0;i<rows;i++) {
+        delete[] BOARD[i];
+        //No need to assign nullptr for BOARD[i],
+        //NO extra if condition, code optimized
     }
+    delete[] BOARD;
+    BOARD = nullptr;
 }
 
 void createFolder(const std::string& folderPath) {
