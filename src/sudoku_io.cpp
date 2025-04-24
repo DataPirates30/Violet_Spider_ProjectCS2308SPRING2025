@@ -291,7 +291,7 @@ void compareSudokuSolvers(const int& experiment_size, const int& empty_boxes) {
     int** board2 = nullptr;
     bool solved = false;
 
-    cout << "Running Sudoku Solver Comparisons....\n";
+    cout << "Running Sudoku Solver Comparisons.....\n";
 
     for (int i = 1; i <= experiment_size; ++i) {
         // Generate a single board and deep copy
