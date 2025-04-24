@@ -10,7 +10,7 @@ In the **Overview** section, briefly summarize the project’s **objective**, co
 In the next paragraph, reflect on the **skills** and **knowledge** gained, like improvements in **problem-solving**, **code optimization**, or **collaboration**. If applicable, mention how the team worked together and how the project contributed to your overall learning experience.
 
 ## Part 1: Complete the Code
-**GitHub Repository Link:** https://github.com/DataPirates30/Violet_Spider_ProjectCS2308SPRING2025-
+**GitHub Repository Link:** https://github.com/DataPirates30/Violet_Spider_ProjectCS2308SPRING2025
 
 **Collaborators Added:**
 - Instructor: `keshavsbhandari`
