@@ -145,7 +145,7 @@
                     return {r, c, 1};
                 }
 
-                // Update best cell if this one has fewer options
+                // Update best cell if this one has fewer options(Done)
                 if (optionsCount > 0 && optionsCount < minOptions) {
                     minOptions = optionsCount;
                     bestRow = r;
