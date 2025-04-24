@@ -75,13 +75,6 @@ bool writeSudokuToFile(int** BOARD, const string& filename) {
     ofstream outFile(filename); // Open file for writing
     if (outFile.is_open()) {
         outFile << content; // Write content to file
-        //After writing content into the file, the board is permanently saved, so now it's time to deallocate it
-        // cout<<"Seeing if the board is an actual board or not"<<endl;
-        // cout<<"Element of the board at 0:  "<<BOARD[8][0]<<endl;
-        // deallocateBoard(BOARD,9);
-
-        // cout<<"Checking BOARD if it is deallocated or not inside writeSudokuToFIle"<<endl;
-        // cout<<"Board:"<<BOARD<<endl;
         outFile.close(); // Close the file
         cout << "Content has been written to the file: " << filename << endl;
         return true;
@@ -188,7 +181,7 @@ void createAndSaveNPuzzles(const int& num_puzzles, const int& complexity_empty_b
         string filename = getFileName(i, destination, prefix);
         // cout<<"Checking if the board is a board or not"<<endl;
         if(writeSudokuToFile(BOARD, filename)){
-//      Checking the board here
+        //   Checking the board here
             // if(BOARD != nullptr) cout<<"It is not a nullptr;"<<endl;
             // cout<<BOARD<<endl;
             deallocateBoard(BOARD,9);
