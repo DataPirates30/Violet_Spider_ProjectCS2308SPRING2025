@@ -42,7 +42,7 @@ int** getEmptyBoard() {
     int** board = new int*[9];
     for(int i = 0; i < 9; i++){
         board[i] = new int[9] {0, 0, 0, 0, 0, 0, 0, 0, 0};
-    }//Initialization ends here
+    }//Initialization ends here..
     return board;
 }
 
