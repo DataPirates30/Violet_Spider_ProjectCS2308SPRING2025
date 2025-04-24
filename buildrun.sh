@@ -2,7 +2,7 @@
 
 # Check if project directory is provided
 if [[ -z "$1" ]]; then
-    echo "Usage: $0 <path_to_project_dir> [program_arguments...]"
+    echo "Usage: $0 <path_to_project_dir> [program_arguments....]"
     exit 1
 fi
 
