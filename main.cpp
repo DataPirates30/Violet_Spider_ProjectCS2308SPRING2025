@@ -71,7 +71,7 @@ int COMPLEXITY_EMPTY_BOXES = 45;
 // */
 int main() {
 
-    cout<<"...................WELCOME TO OUR SUDOKU SOLVER........................."<<endl;
+    cout<<"......................WELCOME TO OUR SUDOKU SOLVER..........................."<<endl;
     char status;
 
     while(true) {
