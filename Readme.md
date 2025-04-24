@@ -243,7 +243,7 @@ void compute() {
 int main() {
     std::cout << "Starting main()\n";
     compute();
-    std::cout << "Ending main()\n";
+    std::cout << "Ending main()\n ";
     return 0;
 }
 ```
