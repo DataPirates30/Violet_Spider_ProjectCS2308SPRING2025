@@ -75,7 +75,7 @@ int main() {
     char status;
 
     while(true) {
-        cout<<"...........Ready to run the program?.............Y/N:"<<endl;
+        cout<<"...........Ready to run the program?..............Y/N:"<<endl;
         cout<<endl;
         cin>>status;
         srand(static_cast<unsigned int>(time(0)));
