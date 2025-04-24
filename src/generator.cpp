@@ -246,20 +246,25 @@ void deleteRandomItems(int** BOARD, const int& n) {
      * @param BOARD A 9x9 Sudoku board.
      * @param n The number of cells to delete (should be between 1 and 81).
      */
-
-    int rows = 8;
-    int columns = 8;
-    int count = 1;
-    // Dummy implementation: Set the first 3 rows to 0
-    while (count<=n){
-        int row_cell = rand()%(rows+1);
-        int col_cell = rand()%(columns+1);
-        if(BOARD[row_cell][col_cell]!=0){
-            BOARD[row_cell][col_cell] = 0;
-            count++;
+        if (BOARD == nullptr || n < 1 || n > 81) {
+            cout << "Invalid number of cells to delete" << endl;
+            exit(1);
+            //If the number of cells to be deleted isn't between 1-81, immediatley kill the program
+        }
+        int rows = 8;
+        int columns = 8;
+        int count = 1;
+        // Dummy implementation: Set the first 3 rows to 0
+        while (count<=n){
+            int row_cell = rand()%(rows+1);
+            int col_cell = rand()%(columns+1);
+            if(BOARD[row_cell][col_cell]!=0){
+                BOARD[row_cell][col_cell] = 0;
+                count++;
+            }
         }
     }
-}
+
 
 
 // Finally return the board
