@@ -50,6 +50,7 @@ int** getEmptyBoard();
  */
 std::vector<int> getShuffledVector();
 
+
 /**
  * @brief Fills the diagonal 3x3 boxes of a Sudoku board with unique numbers from 1 to 9.
  *
