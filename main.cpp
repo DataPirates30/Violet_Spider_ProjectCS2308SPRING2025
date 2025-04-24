@@ -21,54 +21,57 @@ int NUM_PUZZLE_TO_GENERATE = 10;
 
 int COMPLEXITY_EMPTY_BOXES = 45;
 
-//#ifdef DEBUG_MODE
-///**
-// * @brief Debug main function for testing and experimenting.
-// *
-// * This function is designed to help developers quickly test and experiment
-// * with different functions across the program without running the full production flow.
-// *
-// * Use this space to:
-// * - Test specific functions (e.g., board generation, solving, printing).
-// * - Experiment with new features or changes.
-// * - Verify function integration from different headers.
-// * - Run isolated tests to debug specific issues.
-// */
-//int main() {
-//    // You can modify this main function to access all other function implemented
-//    //
-//    srand(0);
-//    for(int count = 1;count<=NUM_PUZZLE_TO_GENERATE;count++) {
-//        cout << "Running in DEBUG MODE...\n";
-//
-//        // Example: Generate a single puzzle and print it
-//        int** board = generateBoard(COMPLEXITY_EMPTY_BOXES);  // Generate with 40 empty cells
-//        cout << "Generated Sudoku Puzzle:\n";
-//        printBoard(board);  // Assuming printBoard is defined in sudoku_io.h
-//
-//        // Test solving the puzzle
-//        if (solve(board)) {
-//            cout << "Solved Puzzle:\n";
-//            printBoard(board);
-//        } else {
-//            cout << "Failed to solve the puzzle.\n";
-//        }
-//        if(board != nullptr) {
-//            cout<<"Needs to be deallocated"<<endl;
-//        }
-//        // Clean up memory
-//        deallocateBoard(board,9);
-//        cout<<"BOARD "<<count<<endl;
-//        cout<<"------------------------------------------------------------"<<endl;
-//    }
-//    return 0;
-//}
-//#else
-///**
-// * @brief Main function for production use.
-// *
-// * Generates, solves, and compares Sudoku puzzles.
-// */
+#ifdef DEBUG_MODE
+/**
+ * @brief Debug main function for testing and experimenting.
+ *
+ * This function is designed to help developers quickly test and experiment
+ * with different functions across the program without running the full production flow.
+ *
+ * Use this space to:
+ * - Test specific functions (e.g., board generation, solving, printing).
+ * - Experiment with new features or changes.
+ * - Verify function integration from different headers.
+ * - Run isolated tests to debug specific issues.
+ */
+int main() {
+    // You can modify this main function to access all other function implemented
+    //
+    srand(0);
+    for(int count = 1;count<=NUM_PUZZLE_TO_GENERATE;count++) {
+        cout << "Running in DEBUG MODE...\n";
+
+        // Example: Generate a single puzzle and print it
+        int** board = generateBoard(COMPLEXITY_EMPTY_BOXES);  // Generate with 40 empty cells
+        cout << "Generated Sudoku Puzzle:\n";
+        printBoard(board);  // Assuming printBoard is defined in sudoku_io.h
+
+        // Test solving the puzzle
+        if (solve(board)) {
+            cout << "Solved Puzzle:\n";
+            printBoard(board);
+        } else {
+            cout << "Failed to solve the puzzle.\n";
+        }
+        if(board != nullptr) {
+            cout<<"Needs to be deallocated"<<endl;
+        }
+        // Clean up memory
+        deallocateBoard(board,9);
+        cout<<"BOARD "<<count<<endl;
+        cout<<"Board value: "<<board<<endl;
+        if(board == nullptr) cout<<"No memory leak"<<endl;
+        cout<<"------------------------------------------------------------"<<endl;
+
+    }
+    return 0;
+}
+#else
+/**
+ * @brief Main function for production use.
+ *
+ * Generates, solves, and compares Sudoku puzzles.
+ */
 int main() {
 
     cout<<"......................WELCOME TO OUR SUDOKU SOLVER..........................."<<endl;
@@ -102,4 +105,5 @@ int main() {
             cout<<"Invalid Input"<<endl;
     }
 }
+#endif
 
