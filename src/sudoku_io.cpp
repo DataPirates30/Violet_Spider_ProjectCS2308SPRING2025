@@ -369,6 +369,8 @@ void compareSudokuSolvers(const int& experiment_size, const int& empty_boxes) {
     cout << "===========================================================================" << endl;
     //After comparing the solution the boards are of no use, let's deaalocate it
     // cout<<"Checking board1 and board2"<<endl;
+    cout<<"Deallocating boards..."<<endl;
+    //Checking if the last board has been deallocated or not--
     cout<<board1<<endl;
     cout<<board2<<endl;
 
