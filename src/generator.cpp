@@ -47,7 +47,7 @@ int** getEmptyBoard() {
 }
 
 // Hint 1:  Implement a function to return shuffled vectors
-// Function to return a randomly shuffled vector from 1 to 9
+// Function to return a randomly shuffled vector from 1 to 9 ..
 std::vector<int> getShuffledVector() {
     // TODO: Implement shuffling logic here
     /**
