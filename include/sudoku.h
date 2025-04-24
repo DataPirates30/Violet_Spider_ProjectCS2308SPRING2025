@@ -85,8 +85,22 @@ bool solveBoard(int** BOARD, const int& r=0, const int& c=0);
 
 
 /**
-  * TODO: Provide appropriate Documentation, see other examples provided within the projects
-  */
+ * @brief Finds the next empty cell on the Sudoku board using the Minimum Remaining Value (MRV) heuristic.
+ *
+ * The MRV heuristic chooses the empty cell with the fewest legal number options (1–9) remaining.
+ * This optimizes the backtracking process by reducing the branching factor and prioritizing
+ * more constrained decisions.
+ *
+ * If a cell is found with only one valid option, it is returned immediately (early exit).
+ *
+ * @param BOARD A pointer to a 9x9 integer array representing the Sudoku board.
+ * @return std::tuple<int, int, int> A tuple containing:
+ *         - Row index of the selected empty cell.
+ *         - Column index of the selected empty cell.
+ *         - Number of valid options (1–9) for that cell.
+ *
+ * @note Returns (-1, -1, INT_MAX) if no empty cells are found (i.e., the board is complete).
+ */
 std::tuple<int, int, int> findNextCell(int** BOARD);
 
 

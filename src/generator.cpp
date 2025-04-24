@@ -64,12 +64,6 @@ std::vector<int> getShuffledVector() {
     // Temporary static return for testing
     // return {3, 1, 4, 2, 7, 6, 5, 9, 8};
     std::vector<int> fill_box = {1,2,3,4,5,6,7,8,9};
-    // int n = fill_box.size();
-    //    // Fisher-Yates shuffle algorithm
-    //    for(int i = n - 1; i > 0; i--) {
-    //     int j = rand() % (i + 1);
-    //     std::swap(fill_box[i], fill_box[j]);
-    // }
     std::random_device rd;
     std::mt19937 g(rd());
     std::shuffle(fill_box.begin(),fill_box.end(),g);

@@ -18,6 +18,8 @@ void deallocateBoard(int** &BOARD, const int& rows) {
     if(BOARD != nullptr) {
         for(int i = 0;i<rows;i++) {
             delete[] BOARD[i];
+            //No need to assign nullptr for BOARD[i],
+            //NO extra if condition, code optimized
         }
         delete[] BOARD;
         BOARD = nullptr;
