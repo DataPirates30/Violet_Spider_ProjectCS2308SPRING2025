@@ -151,10 +151,11 @@
                     bestRow = r;
                     bestCol = c;
                 }
+
             }
         }
     }
-    return {bestRow, bestCol, minOptions};
+     return {bestRow, bestCol, minOptions};
 }
 
 bool solveBoardEfficient(int** BOARD)
@@ -213,9 +214,12 @@ bool solveBoardEfficient(int** BOARD)
       * - If efficient == true, return solveBoardEfficient(board).
       * - Else, return solveBoard(board, 0, 0).
       */
-     if(efficient == true) return solveBoardEfficient((board));
-     return solveBoard(board, 0, 0); // Temporary: Always calls basic solver
- }
+         if(efficient == true) {
+             return solveBoardEfficient(board);
+         } else {
+             return solveBoard(board, 0, 0);
+         }
+     }
 
 
 
