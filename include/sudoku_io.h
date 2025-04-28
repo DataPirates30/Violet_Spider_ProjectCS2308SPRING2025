@@ -41,7 +41,7 @@ using namespace std;
  * @param c Column index for the candidate (default: 0).
  * @param k Candidate number to test (default: 0, no candidate highlighted).
  */
-void printBoard(int** BOARD, const int& r=0, const int& c=0, int k=0);
+void printBoard(int** BOARD, const int& r=0, const int& c=0, int k=0,const bool& color = false );
 
 /**
  * @brief Converts the Sudoku board into a string representation.
