@@ -132,7 +132,7 @@
              * - Track the cell with the minimum number of options.
              * - Implement early exit if a cell with only one option is found.
              */
-            if (BOARD[r][c] == 0) {  // Check if cell is empty
+            if (BOARD[r][c] == 0) {
                 int optionsCount = 0;
                 for (int k = 1; k <= 9; k++) {
                     if (isValid(BOARD, r, c, k)) {
@@ -140,18 +140,19 @@
                     }
                 }
 
-                // Early exit if we find a cell with only one option
-                if (optionsCount == 1) {
-                    return {r, c, 1};
+                if (optionsCount == 0) {
+                    return {r, c, 0};
                 }
 
-                // Update best cell if this one has fewer options(Done)
-                if (optionsCount > 0 && optionsCount < minOptions) {
+                if (optionsCount < minOptions) {
                     minOptions = optionsCount;
                     bestRow = r;
                     bestCol = c;
-                }
 
+                    if (optionsCount == 1) {
+                        return {r, c, 1};
+                    }
+                }
             }
         }
     }
