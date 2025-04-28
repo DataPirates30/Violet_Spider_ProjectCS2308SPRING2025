@@ -18,7 +18,7 @@
 using namespace std;
 using namespace std::chrono;
 
-void printBoard(int** BOARD, const int& r, const int& c, int k)
+void printBoard(int** BOARD, const int& r, const int& c, int k, const bool& color)
 {
     if(BOARD[r][c]>0) k = 0;
 
@@ -27,14 +27,14 @@ void printBoard(int** BOARD, const int& r, const int& c, int k)
         for (int j = 0; j < 9; j++)
         {
             string board_piece;
-            if (BOARD[i][j] == 0) board_piece = "\x1B[93m-\x1B[0m"; // Yellow
+            if (BOARD[i][j] == 0) board_piece = color ? "\x1B[93m-\x1B[0m" : " "; // Yellow
             else board_piece = to_string(BOARD[i][j]); // White
             if ((i == r && j == c) && k != 0)
             {
                 if (isValid(BOARD, r, c, k))
-                    board_piece = "\x1B[32m" + to_string(k) + "\x1B[0m"; // Green
+                    board_piece = color? "\x1B[32m" + to_string(k) + "\x1B[0m" : to_string(k); // Green
                 else
-                    board_piece = "\x1B[31m" + to_string(k) + "\x1B[0m"; // Red
+                    board_piece = color? "\x1B[31m" + to_string(k) + "\x1B[0m" : to_string(k); // Red
             }
             cout << board_piece;
             if (j == 2 || j == 5) cout << " | ";
@@ -48,6 +48,7 @@ void printBoard(int** BOARD, const int& r, const int& c, int k)
         cout << endl;
     }
 }
+
 
 void boardToString(int** BOARD, string &content){
     for(int i = 0; i < 9; i++){
@@ -155,6 +156,7 @@ vector<string> getAllSudokuInFolder(const string& folderPath){
     for(int i = 0; i < sudokus.size(); i++)
         cout << setw(5) << i << setw(50) << sudokus[i] << endl;
     cout << setfill('-') << setw(55)<< "" << setfill(' ') <<endl;
+    sort(sudokus.begin(), sudokus.end());
     return sudokus;
 }
 
@@ -179,20 +181,12 @@ void createAndSaveNPuzzles(const int& num_puzzles, const int& complexity_empty_b
     for(int i=0; i < num_puzzles; i++){
         int** BOARD = generateBoard(complexity_empty_boxes);
         string filename = getFileName(i, destination, prefix);
-        // cout<<"Checking if the board is a board or not"<<endl;
         if(writeSudokuToFile(BOARD, filename)){
-        //   Checking the board here
-            // if(BOARD != nullptr) cout<<"It is not a nullptr;"<<endl;
-            // cout<<BOARD<<endl;
-
-            // if(BOARD == nullptr) cout<<".........It is a nullptr,Fixed Memory Leak..........."<<endl;
-            // cout<<"Value of pointer:"<<BOARD<<endl;
             total_success++;
             cout << "Successfully written(" << filename << ") "<< total_success << "of " << num_puzzles << endl;
         }else{
             cout << "!! Failed to write(" << filename << ") "<< total_success << "of " << num_puzzles << endl;
         }
-        deallocateBoard(BOARD,9);
     }
     cout << total_success << " files written out of " << num_puzzles <<endl;
 }
@@ -214,6 +208,22 @@ void displayProgressBar(int current, int total, int barWidth = 50) {
 }
 
 void solveAndSaveNPuzzles(const int &num_puzzles, const string& source, const string& destination, const string& prefix){
+    /**
+      * TODO:
+      * - Identify where in this function dynamically allocated memory (e.g., Sudoku boards) should be deallocated.
+      * - Use the `deallocateBoard()` function to free memory when:
+      *   1. The board is no longer needed (e.g., after solving or processing).
+      *   2. Before reassigning a pointer to a new board to avoid memory leaks.
+      *   3. Before returning from the function to ensure all allocated memory is freed.
+      *
+      * Example:
+      *   deallocateBoard(BOARD);  // Free memory allocated for the board
+      *
+      * Hints:
+      * - Always deallocate after you're done using the board.
+      * - Be mindful of potential memory leaks if the board isn't deallocated properly.
+      * - Set the pointer to nullptr after deallocation to avoid dangling pointers.
+      */
     int total_success_solve = 0;
     int total_success_write = 0;
     vector<string> path_to_sudokus = getAllSudokuInFolder(source);
@@ -227,19 +237,12 @@ void solveAndSaveNPuzzles(const int &num_puzzles, const string& source, const st
                 string filename = getFileName(i, destination, prefix);
                 cout << "Puzzle Solved(over available): " << total_success_solve << "/" << path_to_sudokus.size() << " | ";
                 cout << "Puzzle Solved(over total): " << total_success_solve << "/" << num_puzzles << endl;
-                //The same writeSudokuToFile Helper function does the deallocation of the board.
-                // cout<<".......Checking for memory leak........."<<endl;
-                // cout<<"First element"<<sudoku[0][1]<<endl;
                 if(writeSudokuToFile(sudoku, filename)){
-                    // if(sudoku == nullptr) cout<<".............Memory leak fixed........."<<endl;
-                    // cout<<(sudoku == nullptr)<<endl;
-                    // cout<<"Value of pointer:"<<sudoku<<endl;
                     total_success_write++;
                 }
                 cout << "Puzzle Solved Written(over available): " << total_success_write << "/" << path_to_sudokus.size() << " | ";
                 cout << "Puzzle Solved Written(over total): " << total_success_write << "/" << num_puzzles << endl;
             }
-            deallocateBoard(sudoku,9);
         }
     }
 }
@@ -266,81 +269,98 @@ int** deepCopyBoard(int** original) {
 }
 
 void compareSudokuSolvers(const int& experiment_size, const int& empty_boxes) {
-    cout << "\n=== Comparing Sudoku Solvers ===" << endl;
-    cout << "Experiment Size: " << experiment_size << endl;
-    cout << "Empty Boxes: " << empty_boxes << endl;
-    cout << setfill('-') << setw(60) << "" << setfill(' ') << endl;
+    /**
+     * TODO:
+     * - Identify where in this function dynamically allocated memory (e.g., Sudoku boards) should be deallocated.
+     * - Use the `deallocateBoard()` function to free memory when:
+     *   1. The board is no longer needed (e.g., after solving or processing).
+     *   2. Before reassigning a pointer to a new board to avoid memory leaks.
+     *   3. Before returning from the function to ensure all allocated memory is freed.
+     *
+     * Example:
+     *   deallocateBoard(BOARD);  // Free memory allocated for the board
+     *
+     * Hints:
+     * - Always deallocate after you're done using the board.
+     * - Be mindful of potential memory leaks if the board isn't deallocated properly.
+     * - Set the pointer to nullptr after deallocation to avoid dangling pointers.
+     */
+    double totalTimeSolveBoard = 0.0;
+    double totalTimeEfficientSolveBoard = 0.0;
 
-    // Initialize timing variables
-    double total_standard_time = 0.0;
-    double total_efficient_time = 0.0;
-    int successful_standard = 0;
-    int successful_efficient = 0;
+    int validSolutionsSolveBoard = 0;
+    int validSolutionsEfficientSolveBoard = 0;
 
-    // Run experiments
-    for (int i = 0; i < experiment_size; i++) {
-        // Generate a new board for testing
-        int** board1 = generateBoard(empty_boxes);
-        int** board2 = deepCopyBoard(board1);
+    int** board1 = nullptr;
+    int** board2 = nullptr;
+    bool solved = false;
 
-        // Time standard solver
-        auto start_standard = high_resolution_clock::now();
-        bool standard_solved = solveBoard(board1, 0, 0);
-        auto stop_standard = high_resolution_clock::now();
-        auto duration_standard = duration_cast<microseconds>(stop_standard - start_standard);
+    cout << "Running Sudoku Solver Comparisons...\n";
 
-        // Time efficient solver
-        auto start_efficient = high_resolution_clock::now();
-        bool efficient_solved = solveBoardEfficient(board2);
-        auto stop_efficient = high_resolution_clock::now();
-        auto duration_efficient = duration_cast<microseconds>(stop_efficient - start_efficient);
-
-        // Update statistics
-        if (standard_solved) {
-            total_standard_time += duration_standard.count();
-            successful_standard++;
+    for (int i = 1; i <= experiment_size; ++i) {
+        // Generate a single board and deep copy
+        board1 = generateBoard(empty_boxes);  // Fresh board for efficient solver
+        if (!board1) {
+            cerr << "Failed to generate board.\n";
+            continue;
         }
-        if (efficient_solved) {
-            total_efficient_time += duration_efficient.count();
-            successful_efficient++;
+        board2 = deepCopyBoard(board1);       // Deep copy for regular solver
+
+        // -------------------- Testing solveBoardEfficient --------------------
+        auto startEfficient = high_resolution_clock::now();
+        solved = solve(board1, true);  // Solve using efficient solver
+        auto endEfficient = high_resolution_clock::now();
+
+        double elapsedEfficient = duration<double>(endEfficient - startEfficient).count();
+        totalTimeEfficientSolveBoard += elapsedEfficient;
+
+        // Validate solution
+        if (solved && checkIfSolutionIsValid(board1)) {
+            validSolutionsEfficientSolveBoard++;
+        } else {
+            cerr << "solveBoardEfficient produced an invalid solution.\n";
         }
 
-        // Deacllocating the board in each iteration
-        deallocateBoard(board1, 9);
-        deallocateBoard(board2, 9);
 
-        // Display progress
-        displayProgressBar(i + 1, experiment_size);
-    }
-    cout << endl;  // New line after progress bar
+        // -------------------- Testing solveBoard --------------------
+        auto startSolve = high_resolution_clock::now();
+        solved = solve(board2);  // Solve using basic solver
+        auto endSolve = high_resolution_clock::now();
 
-    // Calculate averages
-    double avg_standard_time = successful_standard > 0 ? total_standard_time / successful_standard : 0;
-    double avg_efficient_time = successful_efficient > 0 ? total_efficient_time / successful_efficient : 0;
+        double elapsedSolve = duration<double>(endSolve - startSolve).count();
+        totalTimeSolveBoard += elapsedSolve;
 
-    // Display results
-    cout << "\nResults:" << endl;
-    cout << setfill('-') << setw(60) << "" << setfill(' ') << endl;
-    cout << setw(20) << "Metric" << setw(20) << "Standard" << setw(20) << "Efficient" << endl;
-    cout << setfill('-') << setw(60) << "" << setfill(' ') << endl;
+        // Validate solution
+        if (solved && checkIfSolutionIsValid(board2)) {
+            validSolutionsSolveBoard++;
+        } else {
+            cerr << "solveBoard produced an invalid solution.\n";
+        }
 
-    cout << setw(20) << "Success Rate"
-         << setw(20) << (static_cast<double>(successful_standard) / experiment_size * 100) << "%"
-         << setw(20) << (static_cast<double>(successful_efficient) / experiment_size * 100) << "%" << endl;
+        // -------------------- Progress Bar Update --------------------
+        displayProgressBar(i, experiment_size);
 
-    cout << setw(20) << "Avg Time (μs)"
-         << setw(20) << fixed << setprecision(2) << avg_standard_time
-         << setw(20) << fixed << setprecision(2) << avg_efficient_time << endl;
-
-    if (avg_standard_time > 0 && avg_efficient_time > 0) {
-        double speedup = avg_standard_time / avg_efficient_time;
-        cout << setw(20) << "Speedup Factor"
-             << setw(20) << "1.00x"
-             << setw(20) << fixed << setprecision(2) << speedup << "x" << endl;
+        deallocateBoard(board1,9);
+        deallocateBoard(board2,9);
     }
 
-    cout << setfill('-') << setw(60) << "" << setfill(' ') << endl;
+    cout << endl;  // Move to the next line after progress bar is done.
+
+    // -------------------- Summary --------------------
+    cout << "====================== Performance Summary (Empty Boxes: " << empty_boxes << ") ======================" << endl;
+    cout << "Total Experiments: " << experiment_size << endl;
+    cout << "-------------------------------------------------------------" << endl;
+
+    cout << "solveBoard average time: " << fixed << setprecision(4)
+         << 1000 * (totalTimeSolveBoard / experiment_size) << " milliseconds" << endl;
+    cout << "solveBoard valid solutions: " << validSolutionsSolveBoard << "/" << experiment_size << endl;
+
+    cout << "-------------------------------------------------------------" << endl;
+
+    cout << "efficientSolveBoard average time: " << fixed << setprecision(4)
+         << 1000 * (totalTimeEfficientSolveBoard / experiment_size) << " milliseconds" << endl;
+    cout << "efficientSolveBoard valid solutions: " << validSolutionsEfficientSolveBoard << "/" << experiment_size << endl;
+
+    cout << "===========================================================================" << endl;
 }
-
-
 
