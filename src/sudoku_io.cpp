@@ -49,7 +49,6 @@ void printBoard(int** BOARD, const int& r, const int& c, int k, const bool& colo
     }
 }
 
-
 void boardToString(int** BOARD, string &content){
     for(int i = 0; i < 9; i++){
         for(int j = 0; j < 9; j++){
@@ -339,9 +338,6 @@ void compareSudokuSolvers(const int& experiment_size, const int& empty_boxes) {
 
         // -------------------- Progress Bar Update --------------------
         displayProgressBar(i, experiment_size);
-
-        deallocateBoard(board1,9);
-        deallocateBoard(board2,9);
     }
 
     cout << endl;  // Move to the next line after progress bar is done.
@@ -363,4 +359,3 @@ void compareSudokuSolvers(const int& experiment_size, const int& empty_boxes) {
 
     cout << "===========================================================================" << endl;
 }
-
