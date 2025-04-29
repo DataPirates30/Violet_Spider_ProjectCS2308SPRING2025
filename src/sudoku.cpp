@@ -215,11 +215,12 @@ bool solveBoardEfficient(int** BOARD)
       * - If efficient == true, return solveBoardEfficient(board).
       * - Else, return solveBoard(board, 0, 0).
       */
+     //This calls solveBoardEfficient function
          if(efficient == true) {
              return solveBoardEfficient(board);
-         } else {
-             return solveBoard(board, 0, 0);
          }
+         //This calls solveBoard function
+             return solveBoard(board, 0, 0);
      }
 
 
