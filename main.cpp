@@ -98,7 +98,7 @@ int main() {
             return 0;
         }
         else if(std::toupper(status)=='N') {
-            cout<<"See you next time"<<endl;
+            cout<<"..See you next time.."<<endl;
             return 0;
         }
         else
