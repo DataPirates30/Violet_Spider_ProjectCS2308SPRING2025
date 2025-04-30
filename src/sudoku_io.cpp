@@ -187,6 +187,7 @@ void createAndSaveNPuzzles(const int& num_puzzles, const int& complexity_empty_b
             cout << "!! Failed to write(" << filename << ") "<< total_success << "of " << num_puzzles << endl;
         }
         deallocateBoard(BOARD,9);
+        // if(BOARD == nullptr) cout<<"No memory leak"<<endl;
     }
     cout << total_success << " files written out of " << num_puzzles <<endl;
 }
@@ -245,6 +246,7 @@ void solveAndSaveNPuzzles(const int &num_puzzles, const string& source, const st
             }
         }
         deallocateBoard(sudoku,9);
+        // if(sudoku == nullptr) cout<<"No memory leak"<<endl;
     }
 }
 
@@ -340,6 +342,7 @@ void compareSudokuSolvers(const int& experiment_size, const int& empty_boxes) {
 
         deallocateBoard(board1,9);
         deallocateBoard(board2,9);
+        // if(board1 == nullptr && board2 == nullptr) cout<<"No memory leak"<<endl;
         // -------------------- Progress Bar Update --------------------
         displayProgressBar(i, experiment_size);
     }
