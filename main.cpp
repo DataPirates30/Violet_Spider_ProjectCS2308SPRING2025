@@ -9,7 +9,7 @@
 using namespace std;
 
 // Define DEBUG_MODE to enable debug main, comment following to run the actual program
-// #define DEBUG_MODE
+#define DEBUG_MODE
 
 string PATH_TO_PUZZLES = "data/puzzles/";
 string PATH_TO_SOLUTIONS = "data/solutions/";
@@ -53,14 +53,14 @@ int main() {
         } else {
             cout << "Failed to solve the puzzle.\n";
         }
-        if(board != nullptr) {
-            cout<<"Needs to be deallocated"<<endl;
-        }
+        // if(board != nullptr) {
+        //     cout<<"Needs to be deallocated"<<endl;
+        // }
         // Clean up memory
         deallocateBoard(board,9);
-        cout<<"BOARD "<<count<<endl;
-        cout<<"Board value: "<<board<<endl;
-        if(board == nullptr) cout<<"No memory leak"<<endl;
+        // cout<<"BOARD "<<count<<endl;
+        // cout<<"Board value: "<<board<<endl;
+        // if(board == nullptr) cout<<"No memory leak"<<endl;
         cout<<"------------------------------------------------------------"<<endl;
 
     }
