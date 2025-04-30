@@ -90,7 +90,7 @@ int main() {
             solveAndSaveNPuzzles(NUM_PUZZLE_TO_GENERATE, PATH_TO_PUZZLES, PATH_TO_SOLUTIONS, SOLUTION_PREFIX);
 
             // Run experiments to compare solvers
-            //Defined in sudoku_io.hfasdf
+            //Defined in sudoku_io.h
             compareSudokuSolvers(10, 64);
             compareSudokuSolvers(100, 45);
             compareSudokuSolvers(1000, 32);
