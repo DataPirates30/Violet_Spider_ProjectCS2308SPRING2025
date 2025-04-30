@@ -85,21 +85,31 @@ bool solveBoard(int** BOARD, const int& r=0, const int& c=0);
 
 
 /**
- * @brief Finds the next empty cell on the Sudoku board using the Minimum Remaining Value (MRV) heuristic.
+ * @brief Finds the next empty cell using the Minimum Remaining Value (MRV) heuristic.
  *
- * The MRV heuristic chooses the empty cell with the fewest legal number options (1–9) remaining.
- * This optimizes the backtracking process by reducing the branching factor and prioritizing
- * more constrained decisions.
+ * This function scans the 9x9 Sudoku board to find the most constrained empty cell — that is, the one with the
+ * fewest number of valid choices available (Minimum Remaining Value). This improves the efficiency of the solver
+ * by reducing the branching factor in the recursive search.
  *
- * If a cell is found with only one valid option, it is returned immediately (early exit).
+ * The function iterates through all empty cells (cells with value 0) and, for each one, counts how many numbers
+ * from 1 to 9 can be legally placed according to Sudoku rules using `isValid()`. The cell with the lowest number
+ * of valid options is selected.
  *
- * @param BOARD A pointer to a 9x9 integer array representing the Sudoku board.
+ * Early Exit: If any cell has exactly one valid option, it is returned immediately to save computation time.
+ * If a cell has 0 valid options, it is considered a dead-end and also returned to trigger backtracking.
+ *
+ * @param BOARD A 9x9 dynamically allocated Sudoku board (`int**`), where 0 represents an empty cell.
+ *
  * @return std::tuple<int, int, int> A tuple containing:
- *         - Row index of the selected empty cell.
- *         - Column index of the selected empty cell.
- *         - Number of valid options (1–9) for that cell.
+ *         - The row index of the selected cell.
+ *         - The column index of the selected cell.
+ *         - The number of valid options for that cell.
  *
- * @note Returns (-1, -1, INT_MAX) if no empty cells are found (i.e., the board is complete).
+ *         If no empty cell is found (i.e., board is full), the returned indices will be (-1, -1).
+ *         If a cell with zero options is found, it returns that cell's location and 0 (to signal an unsolvable state).
+ *
+ * @note This function is typically used by the efficient solver (e.g., `solveBoardEfficient`) to guide its recursive
+ * decision-making.
  */
 std::tuple<int, int, int> findNextCell(int** BOARD);
 
